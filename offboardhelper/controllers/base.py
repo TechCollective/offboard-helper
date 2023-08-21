@@ -122,7 +122,7 @@ class Base(Controller):
         # ).run()
         self.figlet_out("Offboard Helper", color="blue")
         #self.figlet_out("Welcome to Offboard Helper", "green")
-#       self.test_screen()
+        self.test_screen()
         self.ui()
         self.run_jobs()
         #self.run_job_backup(self.project.jobslist.results[0].source_email)
