@@ -21,8 +21,14 @@ offboardhelper:
 ### The output handler label
 # output_handler: jinja2
 
-### sample foo option
-# foo: bar
+### GYB client directory
+# client_directory: ~/bin/gyb/
+# client_directory: /etc/offboardhelper/client_directory
+
+### GYB projects
+# project_folders_base = ./
+# project_folders_base = /home/shared/projects
+
 
 
 log.colorlog:

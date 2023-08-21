@@ -68,6 +68,7 @@ class GYBHandler(gyb_interface.GYBHandler):
                 sys.exit()
     
     def check_service_account(self, email, config_folder=None):
+        # FIXME Need to have a timeout for this. Just rerun it 3 times.
         command = 'gyb --action check-service-account --email ' + email
         
         if config_folder:

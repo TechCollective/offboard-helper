@@ -45,7 +45,7 @@ class Base(Controller):
         description = 'Manage Google Workspace data'
 
         # text displayed at the bottom of --help output
-        epilog = 'Usage: offboardhelper command1 --foo bar'
+        #epilog = 'Usage: offboardhelper command1 --foo bar'
 
         # controller level arguments. ex: 'offboardhelper --version'
         arguments = [
@@ -59,10 +59,10 @@ class Base(Controller):
     project = Project()
 
     # Need a conf file to store gyb_bin, etc
-    client_directory = "/home/jeff/Projects/offboard-helper-cement/test_client_folder"
-    project_folders_base = "/home/jeff/Projects/offboard-helper-cement/project_folders"
-
-
+    # client_directory = "/home/jeff/Projects/offboard-helper-cement/test_client_folder"
+    client_directory = self.app.config.get('offboardhelper', 'client_directory')
+    # project_folders_base = "/home/jeff/Projects/offboard-helper-cement/project_folders"
+    project_folders_base = self.app.config.get('offboardhelper', 'project_folders_base')
 
     # top_buffer = Buffer()
     # bottom_buffer = Buffer()
@@ -123,6 +123,21 @@ class Base(Controller):
         self.figlet_out("Offboard Helper", color="blue")
         #self.figlet_out("Welcome to Offboard Helper", "green")
         self.test_screen()
+        # TODO Need to check for updates 
+        # bash <(curl -s -S -L https://git.io/gyb-install) -l -d path
+            # -h      show help.
+            # -d      Directory where gyb folder will be installed. Default is \$HOME/bin/
+            # -a      Architecture to install (i686, x86_64, armv7l, aarch64). Default is to detect your arch with "uname -m".
+            # -o      OS we are running (linux, osx). Default is to detect your OS with "uname -s".
+            # -l      Just upgrade GYB to latest version. Skips project creation and auth.
+            # -p      Profile update (true, false). Should script add gyb command to environment. Default is true.
+            # -u      Admin user email address to use with GYB. Default is to prompt.
+            # -r      Regular user email address. Used to test service account access to user data. Default is to prompt.
+            # -v      Version to install (latest, prerelease, draft, 3.8, etc). Default is latest.
+        # Move the gyb executible from that location and move it to the correct location
+        # Then we have to chown root:techteam chmod o-rwx
+
+        
         self.ui()
         self.run_jobs()
         #self.run_job_backup(self.project.jobslist.results[0].source_email)
@@ -236,6 +251,7 @@ class Base(Controller):
         # TODO Check for what is currently in the folder.
         # TODO Has a job log somewhere so we can resume jobs.
         another_jobs = True
+        # FIXME have a way to cancel add another job, without having to cancel the whole script
         while another_jobs:
             if self.project.jobslist == None:
                 job = Job()
@@ -311,6 +327,7 @@ class Base(Controller):
         out, err, code = shell.cmd(command, capture=True)
 
     def run_jobs(self):
+        # TODO once the jobs start running, we can remind the user how to leave screen
         gyb = self.app.handler.get('gyb', 'gyb_shell', setup=True)
         arguments = {
             'config_folder': self.project.config_folder,

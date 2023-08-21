@@ -8,8 +8,10 @@ from .core.gyb_interface import GYBInterface
 
 # configuration defaults
 CONFIG = init_defaults('offboardhelper')
-CONFIG['offboardhelper']['foo'] = 'bar'
-
+#CONFIG['offboardhelper']['foo'] = 'bar'
+# Need a conf file to store gyb_bin, etc
+CONFIG = ['offboardhelper']['client_directory'] = "~/Projects/offboard-helper-cement/test_client_folder"
+CONFIG = ['offboardhelper']['project_folders_base'] = "~/Projects/offboard-helper-cement/project_folders"
 
 class OffboardHelper(App):
     """Offboard Helper primary application."""
