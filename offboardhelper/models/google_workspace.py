@@ -1,0 +1,4 @@
+
+
+class GoogleWorkspace(object):
+    pass
