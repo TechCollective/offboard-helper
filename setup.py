@@ -16,7 +16,7 @@ setup(
     long_description_content_type='text/markdown',
     author='Jeffrey Brite',
     author_email='jeff@techcollective.com',
-    url='https://github.com/johndoe/myapp/',
+    url='https://github.com/TechCollective/offboard-helper/',
     license='GPL v3.0',
     packages=find_packages(exclude=['ez_setup', 'tests*']),
     package_data={'offboardhelper': ['templates/*']},
