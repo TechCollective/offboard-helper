@@ -43,7 +43,7 @@ class GYBHandler(gyb_interface.GYBHandler):
             out, err, code = shell.cmd(command, capture=True)
             if code != 0:
                 self.app.log.error("GYB exited with code " + str(code))
-                self.app.log.error("Error: " + err)
+                self.app.log.error("Error: " + str(err))
             else:
                 return out.decode('utf-8').split("\r")[-2]
         if action == 'check-service-account':
