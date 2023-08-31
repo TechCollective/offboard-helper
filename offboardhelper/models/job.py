@@ -102,6 +102,17 @@ class Job(object):
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
+    def from_tinydb(self, job):
+        self.source_email = job['source_email']
+        self.distination_archive = job['distination_archive']
+        self.distination_group = job['distination_group']
+        self.distination_user = job['distination_user']
+        self.estimated_size = job['estimated_size']
+        self.messages = job['messages']
+        return self
+
+
+
     def __repr__(self):
         """For `print` and `pprint`"""
         return self.to_str()

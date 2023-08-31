@@ -33,7 +33,7 @@ class Jobslist(object):
     @results.setter
     def results(self, results):
         self._results = results
-        self.total_count = len(results)
+        self.total_count = len(self.results)
 
     @property
     def total_count(self):
@@ -42,6 +42,7 @@ class Jobslist(object):
     @total_count.setter
     def total_count(self, total_count):
         self._total_count = total_count
+
 
     def to_dict(self):
         """Returns the model properties as a dict"""
@@ -73,6 +74,11 @@ class Jobslist(object):
     def to_str(self):
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
+
+    def from_tinydb(self, data):
+        for job in data['results']:
+            self.results.append(Job().from_tinydb(job))
+        
 
     def __repr__(self):
         """For `print` and `pprint`"""

@@ -12,6 +12,16 @@ Just install and run the script. It will ask you a few questions, then run all t
   * create the group for the backup for you.
   * change the name of the user we are backing up and add an alias to whoever is suppose to get the new emails
 * add RClown support - move the archive to a Google Shared Drive for you.
+* Report - After the project runs all jobs, we should generate a report that explains everything for the client.
+  * Did we get a full backup. 
+  * For Group restore, did we reacht he Group upload limit, if so, how far did we get.
+* Job Log - add a log file for each project that has the commands being run and the output of those commands. As well as anything relavant.
+* I need to write up a guild on how to setup a Slackbot. 
+
+## Slack Integration
+Add you Slack Token to your .env file
+
+TechCollective's setup uses Autotask and Tasky, which creates Slack channels based on the ticket number. When the scrip asks uif you want Slack notifications, it assumes it will find a channel based on the ticket number. Maybe I'll generalize this in the future. Once it find the channel, it joins it and then adds a message. It will send all new status updates as a thread to that message so it doesn't overwhelm the Slack Channel.
 
 ## Cement Notes
 Below was created by the script builder I used called Cement. Below is it's default output for a README file. I have not veted any of the information below yet. I'll try to update it once I have something stable.

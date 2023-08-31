@@ -107,8 +107,6 @@ class GYBHandler(gyb_interface.GYBHandler):
             self.app.log.error("Error: " + err)
         else:
             return out.decode('utf-8').split("\r")[-2]
-
-        
     
     def backup(self, email, config_folder=None, memory_limit=None, local_folder=None):
         command = 'gyb --action backup --email ' + email
@@ -164,7 +162,15 @@ class GYBHandler(gyb_interface.GYBHandler):
             else:
                 return True
 
-def restore_group(self, email, config_folder=None, memory_limit=None, local_folder=None):
+    def restore_group(self, email, config_folder=None, memory_limit=None, local_folder=None):
+        #gyb --action restore-group 
+        # --email archive-marilyn@cooperativefund.org
+        # --service-account
+        # --config-folder /etc/offboardhelper/clients/cooperativefund.org/
+        # --local-folder GYB-GMail-Backup-marilyn@cooperativefund.org
+        # --use-admin admin@cooperativefund.org
+        # --memory-limit 100
+        
         command = 'gyb --action restore-group --email ' + email
         if config_folder:
             command += ' --config-folder ' + config_folder
@@ -172,6 +178,14 @@ def restore_group(self, email, config_folder=None, memory_limit=None, local_fold
             command += ' --memory-limit ' + memory_limit
         if local_folder:
             command += ' --local-folder ' + local_folder
+        # FIXME need to add the option --use-admin for this to work
+        
+        # FIXME running restore_groups I founded out "Groups supports restore of messages up to 26214400"
+        # restoring message 37227 of 37502 from 2017-02-14 18:25:02
+        # ERROR: Media larger than: 26214400 - Giving up.
+        # restoring message 37340 of 37502 from 2017-02-08 15:41:41
+        # ERROR: Media larger than: 26214400 - Giving up.
+
 
         # Sometimes there are minor network issues. Try to rerun the job 3 times
         runs = 0

@@ -7,25 +7,29 @@ from offboardhelper.models.google_workspace import GoogleWorkspace
 
 class Project(object):
     swagger_types = {
-        'autotask_company_id': 'int',
         'company_name': 'str',
-        'google_workspace': 'GoogleWorkspace',
         'ticket': 'str',
-        'jobslist': 'Jobslist',
-        'slack_channel_id': 'int',
         'config_folder': 'str',
-        'project_folder': 'str'
+        'project_folder': 'str',
+        'jobslist': 'Jobslist',
+        'admin_account': 'str',
+        'autotask_company_id': 'int',
+        'google_workspace': 'GoogleWorkspace',
+        'slack_channel_id': 'str',
+        'slack_status_thread_ts': 'str'
     }
 
-    def __init__(self, autotask_company_id = None, company_name = None, google_workspace = None, ticket = None, jobslist = None, slack_channel_id = None, config_folder = None, project_folder = None):
+    def __init__(self, company_name = None, ticket = None, config_folder = None, project_folder = None, jobslist = Jobslist(), admin_account = None, autotask_company_id = None, google_workspace = None, slack_channel_id = None, slack_status_thread_ts = None):
         self._company_name = None
-        self._autotask_company_id = None
-        self._google_workspace = None
         self._ticket = None
-        self._jobslist = None
-        self._slack_channel_id = None
         self._config_folder = None
         self._project_folder = None
+        self._jobslist = None
+        self._admin_account = None
+        self._autotask_company_id = None
+        self._google_workspace = None        
+        self._slack_channel_id = None
+        self._slack_status_thread_ts = None
         
         if company_name is not None:
             self.company_name = company_name
@@ -43,6 +47,9 @@ class Project(object):
             self.config_folder = config_folder
         if project_folder is not None:
             self.project_folder = project_folder
+        if slack_status_thread_ts is not None:
+            self.slack_status_thread_ts = slack_status_thread_ts
+
 
     @property
     def company_name(self):
@@ -85,6 +92,13 @@ class Project(object):
         self._jobslist = jobslist
 
     @property
+    def admin_account(self):
+        return self._admin_account
+    @admin_account.setter
+    def admin_account(self, admin_account):
+        self._admin_account = admin_account
+
+    @property
     def slack_channel_id(self):
         return self._slack_channel_id
     
@@ -105,6 +119,14 @@ class Project(object):
     @project_folder.setter
     def project_folder(self, project_folder):
         self._project_folder = project_folder
+
+    @property
+    def slack_status_thread_ts(self):
+        return self._slack_status_thread_ts
+    #slack_status_thread_ts.setter
+    def slack_status_thread_ts(self, slack_status_thread_ts):
+        self._slack_status_thread_ts = slack_status_thread_ts
+
 
     def to_dict(self):
         """Returns the model properties as a dict"""
@@ -136,6 +158,18 @@ class Project(object):
     def to_str(self):
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
+    
+    def from_tinydb(self, raw_data):
+        data = raw_data[0]
+        self.autotask_company_id = data['autotask_company_id']
+        self.company_name = data['company_name']
+        self.google_workspace = data['google_workspace']
+        self.ticket = data['ticket']
+        self.slack_channel_id = data['slack_channel_id']
+        self.config_folder = data['config_folder']
+        self.project_folder = data['project_folder']
+        
+        self.jobslist.from_tinydb(data['jobslist'])
 
     def __repr__(self):
         """For `print` and `pprint`"""

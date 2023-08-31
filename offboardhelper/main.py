@@ -1,17 +1,18 @@
-
 from cement import App, TestApp, init_defaults
 from cement.core.exc import CaughtSignal
 from .core.exc import OffboardHelperError
 from .controllers.base import Base
 from .core.gyb_handler import GYBHandler
 from .core.gyb_interface import GYBInterface
+from .ext.ext_slack import SlackInterface, SlackMessages
+
 
 # configuration defaults
 CONFIG = init_defaults('offboardhelper')
-#CONFIG['offboardhelper']['foo'] = 'bar'
+# CONFIG['offboardhelper']['foo'] = 'bar'
 # Need a conf file to store gyb_bin, etc
-CONFIG = ['offboardhelper']['client_directory'] = "~/Projects/offboard-helper-cement/test_client_folder"
-CONFIG = ['offboardhelper']['project_folders_base'] = "~/Projects/offboard-helper-cement/project_folders"
+CONFIG['offboardhelper']['client_directory'] = '/home/jeff/Projects/offboard-helper-cement/test_client_folder'
+CONFIG['offboardhelper']['project_folders_base'] = '/home/jeff/Projects/offboard-helper-cement/project_folders'
 
 class OffboardHelper(App):
     """Offboard Helper primary application."""
@@ -30,6 +31,8 @@ class OffboardHelper(App):
             'yaml',
             'colorlog',
             'jinja2',
+            'offboardhelper.ext.ext_slack',
+            'offboardhelper.ext.ext_tinydb'
         ]
 
         # configuration handler
@@ -47,11 +50,17 @@ class OffboardHelper(App):
         # register handlers
         handlers = [
             Base,
-            GYBHandler
+            GYBHandler,
+            SlackMessages
         ]
         interfaces = [
-            GYBInterface
+            GYBInterface,
+            SlackInterface
         ]
+        define_hooks = [
+            'project_dir_setup',
+            'job_finished'
+            ]
         # hooks = [
         #     ('post_setup', Base.opening ),
         # ]

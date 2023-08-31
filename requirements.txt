@@ -7,3 +7,6 @@ termcolor
 pyfiglet
 six
 InquirerPy
+tinydb
+python-dotenv
+slack_sdk
