@@ -11,8 +11,8 @@ from .ext.ext_slack import SlackInterface, SlackMessages
 CONFIG = init_defaults('offboardhelper')
 # CONFIG['offboardhelper']['foo'] = 'bar'
 # Need a conf file to store gyb_bin, etc
-CONFIG['offboardhelper']['client_directory'] = '/home/jeff/Projects/offboard-helper-cement/test_client_folder'
-CONFIG['offboardhelper']['project_folders_base'] = '/home/jeff/Projects/offboard-helper-cement/project_folders'
+CONFIG['offboardhelper']['client_directory'] = '/home/jeff/Projects/offboard-helper/test_client_folder'
+CONFIG['offboardhelper']['project_folders_base'] = '/home/jeff/Projects/offboard-helper/project_folders'
 
 class OffboardHelper(App):
     """Offboard Helper primary application."""

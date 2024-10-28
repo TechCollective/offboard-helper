@@ -139,6 +139,7 @@ class Base(Controller):
         # ).run()
         
         #self.figlet_out("Welcome to Offboard Helper", "green")
+        
         self.test_screen()
         # TODO Need to check for updates 
         # bash <(curl -s -S -L https://git.io/gyb-install) -l -d path
@@ -235,11 +236,13 @@ class Base(Controller):
 
             if self.project.company_name == "New":
                 self.app.log.error('Contact Senior Tech to setup new client!')
+                sys.exit()
             else:
                 #self.project.config_folder = self.client_directory + "/" + self.project.company_name
                 self.project.config_folder = self.app.config.get('offboardhelper', 'client_directory') + "/" + self.project.company_name
         else:
             self.app.log.error('Contact Senior Tech to setup new client!')
+            sys.exit()
 
     def get_source_email(self):
         return inquirer.text(
