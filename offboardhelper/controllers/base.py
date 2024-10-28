@@ -228,7 +228,7 @@ class Base(Controller):
                 message="Pick your client:",
                 choices=[
                     clients_list[0],
-                    Choice(value=None, name="New"),
+                    Choice(value="New", name="New"),
                 ],
                 default=None,
             ).execute()
